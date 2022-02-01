@@ -36,3 +36,124 @@
     transform: rotate(360deg);
   }
 }
+
+/******** Account Style *********/
+
+.root {
+  height: 100%;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 50px;
+  width: 80%;
+}
+
+.search-and-added {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.table {
+  display: flex;
+}
+
+.ant-table-thead > tr > th {
+  text-align: center !important;
+  color: #2e2e2e !important;
+  background: #f1f1f1 !important;
+}
+
+.ant-table-tbody tr td {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: relative;
+  max-width: 200px;
+}
+
+.ant-table-tbody tr td,
+th {
+  text-align: center;
+}
+
+.account-card {
+  display: flex;
+  background-color: rgb(247 247 247);
+  flex: 1;
+  border-radius: 15px;
+  padding: 40px;
+}
+
+.left-column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.form {
+  display: "flex";
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+input[type="text"] {
+  border: 1px solid #f3f3f3;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+textarea {
+  border: 1px solid #f3f3f3 !important;
+  border-radius: 5px !important;
+  background-color: #ffffff !important;
+}
+.ant-select-selector {
+  border: 1px solid #f3f3f3 !important;
+  border-radius: 5px !important;
+  background-color: #ffffff !important;
+}
+
+.custom-button {
+  border-radius: 5px !important;
+  background-color: #0673d7 !important;
+  border-color: #0673d7 !important;
+}
+
+.delete-button {
+  border-radius: 5px !important;
+  border-color: #db4e4b !important;
+  background-color: #db4e4b !important;
+}
+
+.ant-form-item-control-input-content {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.title {
+  font-size: 22px;
+  color: #5e5e5e;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.table-title {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
