@@ -341,7 +341,7 @@ export const Create = () => {
                   htmlType="submit"
                   loading={isLoading}
                 >
-                  Ekle
+                  {account !== null ? "Güncelle" : "Ekle"}
                 </Button>
               </Form.Item>
             </Form>
