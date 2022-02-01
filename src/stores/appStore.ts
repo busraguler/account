@@ -23,8 +23,8 @@ interface AppStoreState {
 export const appStore = vegemite<AppStoreEventMap, AppStoreState>({
   accounts: [
     {
-      tckn: "40582092582",
-      title: "Developer",
+      tckn: "40458578923",
+      title: "",
       name: "Büşra",
       surname: "GÜLER",
       address: "Meşrutiyet Cad. 24/5-6 Yenişehir 06640 ANKARA ",
@@ -32,8 +32,8 @@ export const appStore = vegemite<AppStoreEventMap, AppStoreState>({
       district: "Atakum",
     },
     {
-      tckn: "4062778345",
-      title: "Dr.",
+      tckn: "57678645637",
+      title: "",
       name: "Buğra",
       surname: "Cicioğlu",
       address: "Muratpaşa Mah. 879.sok No:23 Kat:2 daire:12",
@@ -41,10 +41,10 @@ export const appStore = vegemite<AppStoreEventMap, AppStoreState>({
       district: "Muratpaşa",
     },
     {
-      tckn: "3459874565",
-      title: "Yrd.",
-      name: "Fırat",
-      surname: "Güler",
+      tckn: "6764567656",
+      title: "Doktor",
+      name: "",
+      surname: "",
       address: "Mevlana Mah. 879.sok No:23 Kat:2 daire:12",
       city: "Samsun",
       district: "Merkez",

@@ -4,10 +4,8 @@ import "antd/dist/antd.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { cityAndDistrict } from "../../../utils/il-ilce";
 import { appStore, useAppStoreState } from "../../../stores/appStore";
-import { formatNumber } from "../../../utils/utils";
 import accountImage from "../../../assets/images/accounting.png";
 import backIcon from "../../../assets/images/back.png";
-import deleteIcon from "../../../assets/images/delete.png";
 
 const { Option } = Select;
 
@@ -89,7 +87,6 @@ export const Create = () => {
   };
 
   const onFinish = (values: any) => {
-    console.log(values);
     setLoading(true);
     let newAccounts;
     if (account !== null) {
@@ -150,7 +147,14 @@ export const Create = () => {
               navigate("/");
             }}
           >
-            <img id="back" src={backIcon} alt="back" width={18} height={18} />
+            <img
+              id="back"
+              src={backIcon}
+              alt="back"
+              width={18}
+              height={18}
+              style={{ cursor: "pointer" }}
+            />
           </div>
           {account !== null && (
             <>
@@ -175,7 +179,7 @@ export const Create = () => {
         </div>
         <div className="account-card">
           <div className="left-column">
-            <div className="title">Hesap Ekleme</div>
+            <div className="title">Cari Hesap Kartı</div>
             <img
               id="account"
               src={accountImage}

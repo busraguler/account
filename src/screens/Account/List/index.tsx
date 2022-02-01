@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Input, Table, Space, Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import { appStore, useAppStoreState } from "../../../stores/appStore";
+import { useAppStoreState } from "../../../stores/appStore";
 import "antd/dist/antd.css";
-import deleteIcon from "../../../assets/images/delete.png";
 import editIcon from "../../../assets/images/edit.png";
 import arrowLeftIcon from "../../../assets/images/arrow-left.png";
 import arrowRightIcon from "../../../assets/images/arrow-right.png";
-
 interface TableColumn {
   title?: any;
   dataIndex?: string;
@@ -19,110 +17,80 @@ export const List = () => {
   const [tableData, setTableData] = useState([]);
   const [searchTxt, setSearchTxt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [columns, setColumns] = useState<TableColumn[]>();
   const appState = useAppStoreState();
   const navigate = useNavigate();
 
-  var swapColumn = function (
-    arr: TableColumn[],
-    indexA: number,
-    indexB: number
-  ) {
-    var temp = arr[indexA];
-    arr[indexA] = arr[indexB];
-    arr[indexB] = temp;
-    setColumns(arr);
-    return arr;
-  };
-
-  const columnChange = (text: string, dataIndex: string) => {
-    if (text === "left") {
-      let newColumns: TableColumn[] = [];
-      // let column = columns.find((x) => x.dataIndex === dataIndex);
-      for (let i = 0; i < columns.length; i++) {
-        if (columns[i].dataIndex === dataIndex && i !== 0) {
-          newColumns = swapColumn(columns, i, i - 1);
-          console.log("newColumns", newColumns);
-        }
-      }
-    }
-  };
+  useEffect(() => {
+    setColumns([
+      {
+        title: columnTitle("Vkn / Tckn", "tckn"),
+        dataIndex: "tckn",
+        key: "0",
+      },
+      {
+        title: columnTitle("Unvan / Ad Soyad", "titleNameSurname"),
+        dataIndex: "titleNameSurname",
+        key: "1",
+      },
+      {
+        title: columnTitle("Adres", "address"),
+        dataIndex: "address",
+        key: "2",
+      },
+      {
+        title: columnTitle("İl", "city"),
+        dataIndex: "city",
+        key: "3",
+      },
+      {
+        title: "İşlem",
+        key: "action",
+        render: (text: string, record: any) => {
+          return (
+            <Space size="middle">
+              <a onClick={() => handleEditAccount(record)}>
+                {" "}
+                <img
+                  id="editIcon"
+                  src={editIcon}
+                  alt="editIcon"
+                  width={18}
+                  height={18}
+                />
+              </a>
+            </Space>
+          );
+        },
+      },
+    ]);
+  }, []);
 
   const columnTitle = (text: string, dataIndex: string) => {
     return (
       <span>
         <div className="table-title">
-          {" "}
           <img
-            onClick={() => columnChange("left", dataIndex)}
+            id={"leftSwap-" + dataIndex}
             src={arrowLeftIcon}
             alt="arrowLeftIcon"
             width={14}
             height={14}
-            style={{ marginRight: "20px" }}
+            style={{ marginRight: "20px", cursor: "pointer" }}
           />
           {text}
           <img
+            id={"rightSwap-" + dataIndex}
             src={arrowRightIcon}
             alt="arrowRightIcon"
             width={14}
             height={14}
-            style={{ marginLeft: "20px" }}
+            style={{ marginLeft: "20px", cursor: "pointer" }}
           />
         </div>
       </span>
     );
   };
-  const [columns, setColumns] = useState<TableColumn[]>([
-    {
-      title: columnTitle("Vkn / Tckn", "tckn"),
-      dataIndex: "tckn",
-    },
-    {
-      title: columnTitle("Unvan / Ad Soyad", "titleNameSurname"),
-      dataIndex: "titleNameSurname",
-    },
-    {
-      title: columnTitle("Adres", "address"),
-      dataIndex: "address",
-    },
-    {
-      title: columnTitle("İl", "city"),
-      dataIndex: "city",
-    },
-    {
-      title: "İşlem",
-      key: "action",
-      render: (text: string, record: any) => {
-        return (
-          <Space size="middle">
-            <a onClick={() => handleEditAccount(record)}>
-              {" "}
-              <img
-                id="editIcon"
-                src={editIcon}
-                alt="editIcon"
-                width={18}
-                height={18}
-              />
-            </a>
-            <a onClick={() => handleDeleteAccount(record)}>
-              <img
-                id="deleteIcon"
-                src={deleteIcon}
-                alt="deleteIcon"
-                width={18}
-                height={18}
-              />
-            </a>
-          </Space>
-        );
-      },
-    },
-  ]);
-
-  useEffect(() => {
-    console.log("dsfsdfsdf", columns);
-  }, [columns]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -139,19 +107,6 @@ export const List = () => {
       setIsLoading(false);
     }, 500);
   }, [appState.accounts]);
-
-  const handleDeleteAccount = (account: any) => {
-    appStore.dispatch(
-      "accounts",
-      appState.accounts.filter((x: any) => x.tckn !== account.tckn)
-    );
-  };
-
-  const handleEditAccount = (account: any) => {
-    navigate(`/new-account`, {
-      state: appState.accounts.filter((x: any) => x.tckn === account.tckn),
-    });
-  };
 
   useEffect(() => {
     let searchData = appState.accounts.filter((x: any) => {
@@ -171,6 +126,42 @@ export const List = () => {
     }, 1000);
     return () => clearTimeout(timeoutId);
   }, [searchTxt]);
+
+  const handleEditAccount = (account: any) => {
+    navigate(`/new-account`, {
+      state: appState.accounts.filter((x: any) => x.tckn === account.tckn),
+    });
+  };
+
+  var swapColumn = function (
+    arr: TableColumn[],
+    indexA: number,
+    indexB: number
+  ) {
+    var temp = arr[indexA];
+    arr[indexA] = arr[indexB];
+    arr[indexB] = temp;
+    arr = arr.map((item, key) => {
+      item.key = "key" + key;
+      return item;
+    });
+    setColumns(arr);
+  };
+
+  const changeColumn = (direction: number, id: string) => {
+    if (columns !== undefined) {
+      let column = columns.find((x) => x.dataIndex === id.split("-")[1]);
+      if (column) {
+        let i = columns.indexOf(column);
+        if (direction === 0 && i !== 0) {
+          swapColumn(columns, i, i - 1);
+        }
+        if (direction === 1 && i !== columns.length - 2) {
+          swapColumn(columns, i, i + 1);
+        }
+      }
+    }
+  };
 
   return (
     <div className="main-container">
@@ -198,6 +189,19 @@ export const List = () => {
           columns={columns}
           dataSource={[...tableData]}
           loading={isLoading}
+          onHeaderRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                const target = event.target as Element;
+                if (target.id.split("-")[0] === "leftSwap") {
+                  changeColumn(0, target.id);
+                }
+                if (target.id.split("-")[0] === "rightSwap") {
+                  changeColumn(1, target.id);
+                }
+              },
+            };
+          }}
         />
       </div>
     </div>
